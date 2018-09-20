@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load bootstrap3 %}
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ToDo List</title>
+
+    <meta name="description" content="todo list">
+    <meta name="author" content="Jakub Moskal">
+
+    {% bootstrap_css %}
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">TODO /home</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li {% if current_site == 'index' %}class="active"{% endif %}><a href="/">Home</a></li>
+                <li {% if current_site == 'about' %}class="active"{% endif %}><a href="{% url 'panel:about' %}">About</a></li>
+                <li {% if current_site == 'todo' %}class="active"{% endif %}><a href="{% url 'panel:todo_list' %}">Tasks</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li><a href="#" class="text-muted">Hello {{user.username}}</a></li>
+                <li><a href="{% url 'auth:logout' %}">Log out</a></li>
+
+                {% else %}
+                <li {% if current_site == 'register' %}class="active"{% endif %}><a href="{% url 'auth:register' %}">Register</a></li>
+                <li {% if not current_site %}class="active"{% endif %}><a href="{% url 'auth:login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    {% bootstrap_messages %}
+
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+{% bootstrap_javascript jquery=True %}
+</body>
+
+</html>

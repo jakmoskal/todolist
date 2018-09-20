@@ -1,0 +1,13 @@
+body {
+  min-height: 1000px;
+  padding-top: 70px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.spacer {
+    height: 50px;
+    width: 100%;
+}

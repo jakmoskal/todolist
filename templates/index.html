@@ -1,0 +1,20 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Todo list</h1>
+    <p>
+        manage your daily tasks.
+    </p>
+    <p>
+        {% if user.is_authenticated %}
+        <a class="btn btn-lg btn-primary" href="{% url 'panel:todo_list' %}" role="button">&raquo; Go</a>
+        {% else %}
+        <a class="btn btn-lg btn-primary" href="{% url 'auth:login' %}" role="button">&raquo; Login</a>
+        {% endif %}
+    </p>
+</div>
+
+
+{% endblock %}

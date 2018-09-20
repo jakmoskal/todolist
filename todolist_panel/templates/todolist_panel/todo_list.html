@@ -1,0 +1,45 @@
+{% extends 'base_template.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+
+<h1>All your things ToDo &trade;</h1>
+
+
+<div class="row">
+    {% if todo_lists %}
+
+        {% for todo in todo_lists %}
+
+            {% include 'todolist_panel/todo_list_view_include.html' with todo=todo add_form=add_todo_list_form %}
+
+        {% endfor %}
+
+    {% else %}
+        <p>As of now, you have no todo lists added</p>
+    {% endif %}
+</div>
+
+<p class="spacer"></p>
+<p class="spacer"></p>
+
+<div class="row">
+    <h2 class="text-center">Add another todo list</h2>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+        <form action="{% url 'panel:todo_list_add' %}" method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_field add_todo_list_form.name layout='inline' %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "plus" %} Add
+            </button>
+            {% endbuttons %}
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

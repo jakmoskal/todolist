@@ -1,0 +1,25 @@
+{% extends 'base_template.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div class="row">
+    <h2 class="text-center">Editing task list</h2>
+    <a class="btn btn-success" href="{% url 'panel:todo_list' %}">&raquo; Back to all list</a>
+
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+        <form action="{% url 'panel:todo_list_edit' form.instance.id %}" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% buttons %}
+            <button type="submit" class="btn btn-primary">
+              {% bootstrap_icon "chevron-right" %} Submit
+            </button>
+          {% endbuttons %}
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

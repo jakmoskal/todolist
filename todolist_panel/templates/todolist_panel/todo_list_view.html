@@ -1,0 +1,9 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<a class="btn btn-success" href="{% url 'panel:todo_list' %}">&raquo; Back to all list</a>
+
+{% include 'todolist_panel/todo_list_view_include.html' with todo=todo add_form=add_todo_item_form show_add_item=True %}
+
+{% endblock %}

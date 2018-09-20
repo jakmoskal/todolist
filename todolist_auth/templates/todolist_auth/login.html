@@ -1,0 +1,26 @@
+{% extends 'base_template.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div class="row">
+    <h2 class="text-center">Login</h2>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+        <a href="{% url 'auth:register' %}">No account? Register.</a><br />
+        <!--<a href="{% url 'auth:password_reset' %}">Forgot password?</a>-->
+
+        <form action="{% url 'auth:login' %}" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% buttons %}
+            <button type="submit" class="btn btn-primary">
+              {% bootstrap_icon "star" %} Submit
+            </button>
+          {% endbuttons %}
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

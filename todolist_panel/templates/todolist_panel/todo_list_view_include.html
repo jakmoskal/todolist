@@ -1,0 +1,109 @@
+{% load bootstrap3 %}
+<div class="row">
+    <h3>{{todo.name}}</h3>
+
+    <div class="row">
+        <div class="col-xs-2">
+            <form action="{% url 'panel:todo_list_delete' todo.id %}" method="post" class="form form-inline">
+                {% csrf_token %}
+                {% buttons %}
+                <button type="submit" class="btn btn-danger">
+                    {% bootstrap_icon "trash" %} remove list
+                </button>
+                {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-xs-2">
+            <a class="btn btn-success" href="{% url 'panel:todo_list_edit' todo.id %}">
+                {% bootstrap_icon "cog" %} edit list
+            </a>
+        </div>
+        <div class="col-xs-2">
+            <a class="btn btn-info" href="{% url 'panel:todo_list_view' todo.id %}">
+                {% bootstrap_icon "search" %} show list
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>What to do?</th>
+            <th>Finish</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% if show_add_item %}
+        <tr>
+            <td>
+                <form action="{% url 'panel:todo_item_add' todo.id %}" method="post" class="form form-inline">
+                    {% csrf_token %}
+                    {% bootstrap_field add_form.name layout='inline' %}
+                    {% buttons %}
+                    <button type="submit" class="btn btn-info">
+                        {% bootstrap_icon "plus" %} add item
+                    </button>
+                    {% endbuttons %}
+                </form>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endif %}
+
+        {% if not todo.items %}
+
+        <tr>
+            <td>No list items available</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        {% else %}
+
+            {% for item in todo.items %}
+
+            <tr>
+                <td {% if item.done %}class="done" {% endif %}>{{ item.name }}</td>
+                <td>
+                    {% if not item.done %}
+                    <form action="{% url 'panel:todo_item_finish' item.id %}" method="post" class="form">
+                        {% csrf_token %}
+                        {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "ok" %} done
+                        </button>
+                        {% endbuttons %}
+                    </form>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not item.done %}
+
+                        <a href="{% url 'panel:todo_item_edit' item.id %}" class="btn btn-primary">{% bootstrap_icon "cog" %} edit</a>
+
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{% url 'panel:todo_item_delete' item.id %}" method="post" class="form">
+                        {% csrf_token %}
+                        {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "trash" %} delete
+                        </button>
+                        {% endbuttons %}
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        {% endif %}
+        </tbody>
+    </table>
+</div>
